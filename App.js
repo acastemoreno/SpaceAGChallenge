@@ -7,23 +7,32 @@
  */
 import 'react-native-gesture-handler';
 import React from 'react';
-import {Provider as PaperProvider} from 'react-native-paper';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Provider as StoreProvider} from 'react-redux';
-import {Appbar} from 'react-native-paper';
 
 import store from './app/store';
 import MuestrasScreen from './features/muestras/MuestrasScreen';
 import CameraScreen from './features/camera/CameraScreen';
 import CustomNavigator from './components/CustomNavigator';
+import MuestraScreen from './features/muestras/MuestraScreen';
 
 const {Screen} = createStackNavigator();
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#4f4f4f',
+  },
+};
 
 function App() {
   return (
     <StoreProvider store={store}>
-      <PaperProvider>
+      <PaperProvider theme={theme}>
         <NavigationContainer>
           <CustomNavigator initialRouteName="Muestras">
             <Screen
@@ -35,6 +44,11 @@ function App() {
               name="Camera"
               component={CameraScreen}
               options={{title: 'Nueva Muestra'}}
+            />
+            <Screen
+              name="MuestraDetail"
+              component={MuestraScreen}
+              options={({route}) => ({title: `Muestra ${route.params.id}`})}
             />
           </CustomNavigator>
         </NavigationContainer>

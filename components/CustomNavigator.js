@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Appbar} from 'react-native-paper';
+import {Appbar, IconButton} from 'react-native-paper';
 
 const {Navigator} = createStackNavigator();
 
@@ -16,7 +16,11 @@ const header = ({scene, previous, navigation}) => {
   return (
     <Appbar.Header>
       {previous ? (
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.BackAction
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
       ) : null}
       <Appbar.Content title={title} />
     </Appbar.Header>

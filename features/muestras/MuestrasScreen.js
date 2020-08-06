@@ -1,19 +1,30 @@
 import React from 'react';
-import {Button, View, Text} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
+import {Button, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {List} from 'react-native-paper';
 
-import {increment} from './muestrasSlice';
+function MuestrasScreen({navigation}) {
+  const muestras = useSelector((state) => state.muestras);
 
-function MuestrasScreen() {
-  const count = useSelector((state) => state.muestras.value);
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const muestrasElements =
+    muestras.length === 0
+      ? null
+      : muestras.map((muestra) => {
+          return (
+            <List.Item
+              key={muestra.id}
+              title={`Muestra ${muestra.id}`}
+              right={(props) => <List.Icon {...props} icon="chevron-right" />}
+              onPress={() =>
+                navigation.navigate('MuestraDetail', {id: muestra.id})
+              }
+            />
+          );
+        });
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen {count}</Text>
-      <Button title="Increment" onPress={() => dispatch(increment())} />
+    <View>
+      {muestrasElements}
       <Button
         title="Go to Camera"
         onPress={() => navigation.navigate('Camera')}

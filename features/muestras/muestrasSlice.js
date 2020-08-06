@@ -1,23 +1,19 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-const initialState = {
-  value: 0,
-};
+const initialState = [];
 
 const muestrasSlice = createSlice({
   name: 'muestras',
   initialState,
   reducers: {
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1;
+    addMuestra: (state, {payload}) => {
+      const new_index = state.length === 0 ? 1 : state.length + 1;
+
+      state.push({url: payload, id: new_index});
     },
   },
 });
 
-export const {increment} = muestrasSlice.actions;
+export const {addMuestra} = muestrasSlice.actions;
 
 export default muestrasSlice.reducer;

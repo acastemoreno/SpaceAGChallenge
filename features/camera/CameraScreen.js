@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {RNCamera} from 'react-native-camera';
+import {useDispatch} from 'react-redux';
+import {addMuestra} from '../muestras/muestrasSlice';
 
 const styles = StyleSheet.create({
   container: {
@@ -36,11 +38,14 @@ const PendingView = () => (
   </View>
 );
 
-const CameraScreen = () => {
+const CameraScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+
   const takePicture = async function (camera) {
     const options = {quality: 0.5, base64: true};
     const data = await camera.takePictureAsync(options);
-    console.log(data.uri);
+    dispatch(addMuestra(data.uri));
+    navigation.navigate('Muestras');
   };
 
   return (
