@@ -56,7 +56,9 @@ const CameraScreen = () => {
         }}
         captureAudio={false}>
         {({camera, status}) => {
-          if (status !== 'READY') return <PendingView />;
+          if (status !== 'READY') {
+            return <PendingView />;
+          }
           return (
             <View
               style={{flex: 0, flexDirection: 'row', justifyContent: 'center'}}>
