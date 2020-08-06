@@ -10,11 +10,19 @@ import React from 'react';
 import {Button, View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {Provider, useSelector, useDispatch} from 'react-redux';
+
+import store from './app/store';
+import {increment} from './features/muestras/muestrasSlice';
 
 function HomeScreen({navigation}) {
+  const count = useSelector((state) => state.muestras.value);
+  const dispatch = useDispatch();
+
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
+      <Text>Home Screen {count}</Text>
+      <Button title="Increment" onPress={() => dispatch(increment())} />
       <Button
         title="Go to Details"
         onPress={() => navigation.navigate('Details')}
@@ -48,20 +56,22 @@ const {Navigator, Screen} = createStackNavigator();
 
 function App() {
   return (
-    <NavigationContainer>
-      <Navigator initialRouteName="Muestras">
-        <Screen
-          name="Muestras"
-          component={HomeScreen}
-          options={{title: 'Muestras'}}
-        />
-        <Screen
-          name="Details"
-          component={DetailsScreen}
-          options={{title: 'Nueva Muestra'}}
-        />
-      </Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Navigator initialRouteName="Muestras">
+          <Screen
+            name="Muestras"
+            component={HomeScreen}
+            options={{title: 'Muestras'}}
+          />
+          <Screen
+            name="Details"
+            component={DetailsScreen}
+            options={{title: 'Nueva Muestra'}}
+          />
+        </Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 export default App;
