@@ -51,7 +51,7 @@ function App() {
           <Screen
             name="Camera"
             component={CameraScreen}
-            options={{title: 'Camera'}}
+            options={{title: 'Nueva Muestra'}}
           />
           {/* <Screen
             name="Details"
