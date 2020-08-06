@@ -22,7 +22,6 @@ const {Screen} = createStackNavigator();
 
 const theme = {
   ...DefaultTheme,
-  roundness: 2,
   colors: {
     ...DefaultTheme.colors,
     primary: '#4f4f4f',

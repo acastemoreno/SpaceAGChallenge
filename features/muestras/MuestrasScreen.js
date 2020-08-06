@@ -1,7 +1,7 @@
 import React from 'react';
-import {Button, View} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import {useSelector} from 'react-redux';
-import {List} from 'react-native-paper';
+import {List, Button} from 'react-native-paper';
 
 function MuestrasScreen({navigation}) {
   const muestras = useSelector((state) => state.muestras);
@@ -23,12 +23,26 @@ function MuestrasScreen({navigation}) {
         });
 
   return (
-    <View>
-      {muestrasElements}
-      <Button
-        title="Go to Camera"
-        onPress={() => navigation.navigate('Camera')}
-      />
+    <View style={{flex: 1}}>
+      <ScrollView>{muestrasElements}</ScrollView>
+      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <Button
+          icon="plus"
+          mode="contained"
+          style={{
+            height: 46,
+            borderRadius: 23,
+            justifyContent: 'center',
+            marginBottom: 15,
+          }}
+          contentStyle={{
+            height: 46,
+            borderRadius: 23,
+          }}
+          onPress={() => navigation.navigate('Camera')}>
+          Nueva Muestra
+        </Button>
+      </View>
     </View>
   );
 }
