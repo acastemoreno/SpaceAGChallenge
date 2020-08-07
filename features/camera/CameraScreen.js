@@ -38,12 +38,12 @@ const CameraScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const [showCamera, SetUseCamera] = useState(false);
 
-  Geolocation.setRNConfiguration();
-
   useEffect(() => {
+    Geolocation.setRNConfiguration({});
+
     const requestPermission = async () => {
       const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
           title: 'Location Access Required',
           message: 'This App needs to Access your location',
@@ -77,20 +77,27 @@ const CameraScreen = ({navigation}) => {
       navigation.navigate('Muestras');
     };
 
-    const error = (errormsg) => {
-      console.log(errormsg);
+    const error = (error) => {
+      console.log(error);
+      navigation.navigate('Muestras');
     };
 
     const option = {
       enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 5000,
     };
 
-    Geolocation.getCurrentPosition(good, error, option);
-
-    // const options = {quality: 0.5, base64: true};
-    // const data = await camera.takePictureAsync(options);
-    // dispatch(addMuestra(data.uri));
-    // navigation.navigate('Muestras');
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      {
+        title: 'Location Access Required',
+        message: 'This App needs to Access your location',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      Geolocation.getCurrentPosition(good, error, option);
+    }
   };
 
   return (
