@@ -24,7 +24,7 @@ const MuestraScreen = ({route, navigation}) => {
   return (
     <Image
       key={muestra.id}
-      source={{uri: muestra.url}}
+      source={{uri: muestra.uri}}
       style={styles.preview}
     />
   );
