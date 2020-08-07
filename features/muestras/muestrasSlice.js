@@ -9,7 +9,6 @@ const muestrasSlice = createSlice({
     addMuestra: (state, {payload}) => {
       const new_index = state.length === 0 ? 1 : state.length + 1;
       payload.id = new_index;
-
       state.unshift(payload);
     },
   },
